@@ -1,31 +1,41 @@
 class Solution {
     public boolean isBipartite(int[][] graph) {
-         int N = graph.length;
-        int[] colors = new int[N]; // 0 not colored, 1 = Red, -1 = Blue
-        for(int vertex = 0; vertex < N; vertex++) { // handle forest
-            if(colors[vertex] == 0) {
-                colors[vertex] = 1;
-                Queue<Integer> queue = new LinkedList();
-                queue.add(vertex);
-                
-                while(!queue.isEmpty()) {
-                    int currVert = queue.poll();
-                    for(int adjVert : graph[currVert]) {
-                        if(colors[adjVert] == colors[currVert])
-                            return false;
-                        if(colors[adjVert] == 0) {
-                            colors[adjVert] = -colors[currVert];
-                            queue.add(adjVert);
-                        }
-                    }
+          int[] visited=new int[graph.length];
+        for(int i=0;i<visited.length;i++){
+            visited[i]=-1;
+        }
+        for(int i=0;i<visited.length;i++){
+            if(visited[i]==-1){
+                if(!bfs(visited,i,graph)){
+                    return false;
+
                 }
             }
         }
-        
+
         return true;
+    }
+    public boolean bfs(int[] visited,int start,int[][] graph){
+        Queue<Integer> q=new LinkedList<>();
+        visited[start]=0;
+        q.add(start);
+        while(!q.isEmpty()){
+            int node =q.poll();
+            for(int help : graph[node] ){
+                if(visited[help]==-1){
+                    if(visited[node]==1){
+                        visited[help]=0;
+                    }
+                    else{
+                        visited[help]=1;
+                    }
+                    q.add(help);
+                }
+                else if(visited[help]==visited[node]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
-}
-
- 
-
-  

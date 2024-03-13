@@ -1,10 +1,15 @@
 class Solution {
-    public int rob(int[] nums) {
-        int[][] dp = new int[nums.length + 1][2];
-    for (int i = 1; i <= nums.length; i++) {
-        dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]);
-        dp[i][1] = nums[i - 1] + dp[i - 1][0];
+      public int helper(int []nums,int ind,int []dp){
+        if(ind>=nums.length)return 0;
+        if(dp[ind]!=-1)return dp[ind];
+        int not=helper(nums,ind+1,dp);
+        int take=nums[ind]+helper(nums,ind+2,dp);
+        return dp[ind]=Math.max(not,take);
     }
-    return Math.max(dp[nums.length][0], dp[nums.length][1]);
+    public int rob(int[] nums) {
+        int n=nums.length;
+        int []dp=new int[n];
+        Arrays.fill(dp,-1);
+        return helper(nums,0,dp);
     }
 }

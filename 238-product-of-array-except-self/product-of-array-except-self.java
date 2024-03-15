@@ -9,14 +9,14 @@ class Solution {
             left=left*nums[i-1];
             res[i]=left;
         }
-int right = 1;
-for(int i=n-1;i>=0;i--)
-{
-    if(i<n-1)
-    right=right*nums[i+1];
-    res[i]=res[i]*right;
-}
-return res;
+        int right = 1;
+        for(int i=n-1;i>=0;i--)
+        {
+            if(i<n-1)
+            right=right*nums[i+1];
+            res[i]=res[i]*right;
+        }
+        return res;
 
     }
 }
